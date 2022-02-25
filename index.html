@@ -34,6 +34,11 @@
         function value(){
             var judul = document.getElementById('judul').value;
             var content = tinyMCE.activeEditor.getContent();
+            if(judul == '' || content == ''){
+                alert('Title and Content cannot blank');
+                return false;
+            }
+
             addPost(judul,content);
         }
         var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC93cC1hcGkudGVzdCIsImlhdCI6MTY0NTc2NTIyMywibmJmIjoxNjQ1NzY1MjIzLCJleHAiOjE2NDYzNzAwMjMsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.qXsre9AQCCDiSG5LIfnEL5lX249RppiEXNVO1gxgd94';
