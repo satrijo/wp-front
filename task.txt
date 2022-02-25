@@ -1,0 +1,18 @@
+Instruction 
+
+Create page a with HTML page with TinyMCE editor 
+Add functionality to Post an “Article” to a WordPress site from the TinyMCE editor on the HTML page. For authentication, you must use using wordpress REST API.
+
+HTML page mockup 
+https://framer.com/share/Test-wp-dev--nCMTHSRTTjxg4OVXUdwD/q5yvypO0C
+
+Note:
+No need to add functionality to connect to the WordPress site from the front end.
+
+Resources 
+https://github.com/Tmeister/wp-api-jwt-auth
+https://developer.wordpress.org/rest-api/reference/posts/
+
+
+Submission:
+Once you’re ready with the project on your local server, you’ll have an interview call with the project manager.

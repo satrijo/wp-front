@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WP test</title>
+
+    <script src="https://cdn.tiny.cloud/1/o410ovlhno5smapoezxhpvyfl9incwod1ob6ubvizvigwvv5/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="relative mx-auto bg-white h-screen">
+        <div class="bg-cyan-500 h-16"></div>
+        <div class="w-[800px] mx-auto pt-10 text-center block">
+            
+            <h1 class="text-4xl font-medium text-slate-600">Welcome to HTML Editor</h1>
+            <p class="mt-8 text-xl">Publish content to your Wordpress site in just one-click</p>
+            <p class="my-10 font-bold text-xl">Add New post to Wordpress below</p>
+
+            <input type="text" id="judul" class="w-full border-2 mb-4 h-10 rounded-lg px-5 py-6 focus:outline-none focus:border-cyan-500 focus:ring-cyan-500" placeholder="Type your Post Title">
+            <div class="w-[90%] mx-auto border-2 rounded-2xl overflow-hidden">
+                <textarea id="content"></textarea>    
+            </div>
+            <button class="js-add-post bg-blue-400 px-4 py-2 mt-4 rounded-md text-white font-medium hover:bg-blue-500 hover:scale-110 transition duration-300 ease-in-out">Publish</button>
+        </div>
+    </div>  
+
+
+
+    <script>
+        
+        function value(){
+            var judul = document.getElementById('judul').value;
+            var content = tinyMCE.activeEditor.getContent();
+            addPost(judul,content);
+        }
+        var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC93cC1hcGkudGVzdCIsImlhdCI6MTY0NTc2NTIyMywibmJmIjoxNjQ1NzY1MjIzLCJleHAiOjE2NDYzNzAwMjMsImRhdGEiOnsidXNlciI6eyJpZCI6IjEifX19.qXsre9AQCCDiSG5LIfnEL5lX249RppiEXNVO1gxgd94';
+        localStorage.setItem('jwt', token);
+
+        function addPost(judul,content) {
+            fetch('http://wp-api.test/wp-json/wp/v2/posts', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                },
+                body: JSON.stringify({
+                    title: judul,
+                    content: content,
+                    status: 'publish'
+                })  
+            }).then(function (response) {
+                alert('Post Success!');
+                document.getElementById('judul').value = "";
+                tinyMCE.activeEditor.setContent('');
+                return response.json()
+            }).then(function (post) {
+                console.log(post)
+            });
+        }
+
+        const addPostButton = document.querySelector('.js-add-post')
+        addPostButton.addEventListener('click', () => value())
+
+       
+
+
+    </script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+            height: "480",
+        });
+    </script>
+</body>
+</html>
